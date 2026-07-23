@@ -20,7 +20,11 @@ public class UpdateProjectCommandHandler : IRequestHandler<UpdateProjectCommand>
         {
             throw new NotFoundException($"Project with Id {request.Id} not found.");
         }
-
+        var existingProjectWithSameName = await _unitOfWork.Projects.GetAsync(a => a.Name == request.Name && a.Id != request.Id);
+        if (existingProjectWithSameName != null)
+        {
+            throw new InvalidOperationException("A project with the same name already exists.");
+        }
         project.Name = request.Name;
         project.Description = request.Description;
         project.UpdatedAt = DateTime.UtcNow;

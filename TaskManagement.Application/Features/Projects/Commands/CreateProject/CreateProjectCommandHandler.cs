@@ -15,6 +15,11 @@ public class CreateProjectCommandHandler : IRequestHandler<CreateProjectCommand>
 
     public async Task Handle(CreateProjectCommand request, CancellationToken cancellationToken)
     {
+        var existingProject = await _unitOfWork.Projects.GetAsync(a => a.Name == request.Name);
+        if (existingProject != null)
+        {
+            throw new InvalidOperationException("A project with the same name already exists.");
+        }
         var project = new Project
         {
             Name = request.Name,

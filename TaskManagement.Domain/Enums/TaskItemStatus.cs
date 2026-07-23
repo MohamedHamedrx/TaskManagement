@@ -2,9 +2,8 @@
 
 public enum TaskItemStatus
 {
-    NotStarted,
+    Todo,
     InProgress,
-    Completed,
-    OnHold,
-    Cancelled
+    Done,
+    ToDo
 }

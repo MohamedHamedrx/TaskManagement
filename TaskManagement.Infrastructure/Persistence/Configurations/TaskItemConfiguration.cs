@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using TaskManagement.Domain.Entities.TaskItems;
+using TaskManagement.Domain.Enums;
 
 namespace TaskManagement.Infrastructure.Persistence.Configurations;
 
@@ -22,11 +23,13 @@ public class TaskItemConfiguration : IEntityTypeConfiguration<TaskItem>
         builder.Property(t => t.Status)
             .HasConversion<string>()
             .HasMaxLength(20)
+            .HasDefaultValue(TaskItemStatus.Todo)
             .IsRequired();
 
         builder.Property(t => t.Priority)
             .HasConversion<string>()
             .HasMaxLength(20)
+            .HasDefaultValue(TaskPriority.Medium)
             .IsRequired();
 
         builder.Property(t => t.DueDate);
